@@ -305,7 +305,7 @@ def run_ode_methods(h, steps, y0, neval, eqn, method, zoom, show_deriv, show_gra
 
 	# set some plotting related variables
 	scale = 0.1
-	buffer = 10.
+	buffer =  5.
 	colors = ['b', 'r', 'g', 'm', 'c']
 
 	# plot the numerical solution
