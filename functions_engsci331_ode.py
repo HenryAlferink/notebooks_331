@@ -314,7 +314,7 @@ def run_ode_methods(h, steps, y0, neval, eqn, method, zoom, show_deriv, show_gra
 	# calculate one more solution step and save locations of derivative evaluations
 	y_next, eval_x, eval_y, eval_f = step(function_number, x[-1], y[-1], h, alpha, beta, gamma)
 	if method == "RK2":
-		print(y[-1], y_next, alpha, beta, gamma)
+		print('Alpha ', alpha, '\nBeta  ', beta, '\nGamma ', gamma)
 
 	# recalculate axes limits if zoom requested
 	if zoom:
