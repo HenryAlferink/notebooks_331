@@ -292,10 +292,6 @@ def run_ode_methods(h, steps, y0, neval, eqn, method, zoom, show_deriv, show_gra
 		"ClassicRK4": [[1., 2., 2., 1.], [0., 0.5, 0.5, 1.], [0., 0.5, 0.5, 1.]],
 	}
 	alpha, beta, gamma = dict_method[method]
-	# if method == "RK2":
-	# 	print('Alpha: ', alpha)
-	# 	print('Beta: ', beta)
-	# 	print('Gamma: ', gamma)
 
 	# set upper bound for solution
 	x_end = np.min([h*steps, x_max])
@@ -314,11 +310,6 @@ def run_ode_methods(h, steps, y0, neval, eqn, method, zoom, show_deriv, show_gra
 
 	# plot the numerical solution
 	ax.plot(x, y, marker='o', color='k', label='Numerical Solution')
-	#
-	# if method == "RK2":
-	# 	print('Alpha: ', alpha)
-	# 	print('Beta: ', beta)
-	# 	print('Gamma: ', gamma)
 
 	# calculate one more solution step and save locations of derivative evaluations
 	y_next, eval_x, eval_y, eval_f = step(function_number, x[-1], y[-1], h, alpha, beta, gamma)
@@ -346,7 +337,6 @@ def run_ode_methods(h, steps, y0, neval, eqn, method, zoom, show_deriv, show_gra
 			[y[-1], y_next],
 			color='k', ls='-', lw=2., marker='s', label="Next Step"
 		)
-		# label=r"$y_{k+1}=y_{k}+h\,f_{AV}$")
 
 		# for each new derivative evaluation, plot some related stuff
 		for i in range(neval):
@@ -361,7 +351,6 @@ def run_ode_methods(h, steps, y0, neval, eqn, method, zoom, show_deriv, show_gra
 			# marker where derivatives are evaluated
 			if i > 0:
 				ax.plot(eval_x[i], eval_y[i], color=colors[i], marker='s', ls='')
-			# label=r"$(t_k+\beta_{%d} h, y_{k}+\gamma_{%d} h f_{%d})$" % (i, i, i - 1,)
 
 			# dashed line showing where next derivative evaluation is taken
 			if i < neval-1:
@@ -370,7 +359,6 @@ def run_ode_methods(h, steps, y0, neval, eqn, method, zoom, show_deriv, show_gra
 					[eval_y[0], eval_y[0] + (eval_x[i+1] - eval_x[0]) * eval_f[i]],
 					ls='--', color=colors[i]
 				)
-			# label=r"$f_{%d}$"%(i,)
 
 	# plot the derivative scalar function as quiver plot - modified code from AJM
 	if show_deriv:
@@ -456,9 +444,9 @@ def run_error(nstep, t_end, y0, eqn, euler, ieuler, rk4):
 			# set rk parameters for current model
 			alpha, beta, gamma = dict_method[method]
 
-			# solve ode for each step size
 			for i in range(len(h)):
 
+				# solve ode for current step size
 				x, y = solver(function_number, 0., y0, t_end, h[i], alpha, beta, gamma)
 
 				# absolute error
@@ -565,8 +553,6 @@ def step(function_number, xk, yk, h, alpha, beta, gamma):
 	eval_x.append(xk + h)
 	eval_y.append(yk + h * average)
 	eval_f.append(average)
-
-	print(alpha, eval_f)
 
 	# calculate the next solution estimate
 	yk1 = yk + h * average
